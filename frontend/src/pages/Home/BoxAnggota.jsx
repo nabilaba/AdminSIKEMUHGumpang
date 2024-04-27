@@ -25,8 +25,18 @@ export default function BoxAnggota() {
           pos="relative"
           overflow="hidden"
         >
-          <Image boxSize="175px" src={item.foto} alt={item.nama} borderRadius="2xl" />
-          <VStack align="start" spacing={0} flex="1" fontSize="xl">
+          <Image
+            boxSize="175px"
+            src={item.foto}
+            alt={item.nama}
+            borderRadius="2xl"
+          />
+          <Stack
+            align="start"
+            spacing={0}
+            flex="1"
+            fontSize={{ base: "14px", lg: "xl" }}
+          >
             <Text fontWeight="bold" color="red" textTransform="uppercase">
               {item.nama}
             </Text>
@@ -35,7 +45,7 @@ export default function BoxAnggota() {
             <Text>Pendidikan: {item.pendidikan}</Text>
             <Text>Alamat: {item.alamat}</Text>
             <Text>Jabatan: {item.jabatan}</Text>
-          </VStack>
+          </Stack>
         </HStack>
       ))}
     </Stack>

@@ -22,7 +22,7 @@ export default function Home() {
         opacity="0.4"
       />
       <Stack w="full" spacing="4" zIndex="2">
-        <Box textAlign={{ base: "center", lg: "left" }}>
+        <Box>
           <Heading>SISTEM INFORMASI</Heading>
           <Heading color="blue.200">KEANGGOTAAN MUHAMMADIYAH</Heading>
           <Heading color="yellow.200">GUMPANG</Heading>
@@ -32,9 +32,16 @@ export default function Home() {
           </Text>
         </Box>
         <BoxAnggota />
-        <Text color="gray.400" fontSize="93%">
-          Copyright © &copy; 2024 Sistem Informasi Keanggotaan Muhammadiyah
+        <Text color="gray.500" fontSize="93%" hideBelow="lg">
+          Copyright &copy; 2024 Sistem Informasi Keanggotaan Muhammadiyah
           Gumpang.
+        </Text>
+        <Text color="gray.500" fontSize="93%" hideFrom="lg" textAlign="center">
+          Copyright &copy; 2024
+          <br />
+          Sistem Informasi Keanggotaan
+          <br />
+          Muhammadiyah Gumpang.
         </Text>
       </Stack>
     </Stack>
