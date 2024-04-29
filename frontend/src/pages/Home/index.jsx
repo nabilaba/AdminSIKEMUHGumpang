@@ -1,14 +1,27 @@
-import { Stack, Heading, Icon, Text, Box, Image } from "@chakra-ui/react";
+import {
+  Stack,
+  Heading,
+  Icon,
+  Text,
+  Box,
+  Image,
+} from "@chakra-ui/react";
 import BoxAnggota from "./BoxAnggota";
 import { FaLocationDot } from "react-icons/fa6";
+import { useState } from "react";
+import Footer from "./Footer";
+import Search from "./Search";
 
 export default function Home() {
+  const [filter, setFilter] = useState("");
+
   return (
     <Stack
       py={{ base: 6, lg: 10 }}
       px={{ base: 4, lg: 16 }}
       w="full"
       bg="#2e2e2e url(assets/bg.png) no-repeat left top"
+      minH="100vh"
     >
       <Image
         boxSize="200px"
@@ -21,28 +34,18 @@ export default function Home() {
         zIndex="1"
         opacity="0.4"
       />
-      <Stack w="full" spacing="4" zIndex="2">
-        <Box>
+      <Stack spacing="4" zIndex="2">
+        <Box w="full">
           <Heading>SISTEM INFORMASI</Heading>
           <Heading color="blue.200">KEANGGOTAAN MUHAMMADIYAH</Heading>
           <Heading color="yellow.200">GUMPANG</Heading>
           <Text mt="2">
-            <Icon as={FaLocationDot} /> Gumpang, Kecamatan Kartasura, Kabupaten
-            Sukoharjo
+            <Icon as={FaLocationDot} /> Gumpang, Kec. Kartasura, Kab. Sukoharjo
           </Text>
         </Box>
-        <BoxAnggota />
-        <Text color="gray.500" fontSize="93%" hideBelow="lg">
-          Copyright &copy; 2024 Sistem Informasi Keanggotaan Muhammadiyah
-          Gumpang.
-        </Text>
-        <Text color="gray.500" fontSize="93%" hideFrom="lg" textAlign="center">
-          Copyright &copy; 2024
-          <br />
-          Sistem Informasi Keanggotaan
-          <br />
-          Muhammadiyah Gumpang.
-        </Text>
+        <Search setFilter={setFilter} />
+        <BoxAnggota filter={filter} />
+        <Footer />
       </Stack>
     </Stack>
   );
