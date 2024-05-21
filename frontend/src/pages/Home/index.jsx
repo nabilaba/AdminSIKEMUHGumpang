@@ -1,28 +1,46 @@
-import { Box, Stack, Image } from "@chakra-ui/react";
+import { Stack, Text } from "@chakra-ui/react";
 import BoxAnggota from "./BoxAnggota";
 import { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Search from "./Search";
 import Hero from "./Hero";
 import Pagination from "./Pagination";
+import axios from "axios";
+import { apiData } from "../../configs/api";
 
 export default function Home() {
   const [filter, setFilter] = useState("");
+  const [dataServer, setDataServer] = useState([]);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+
+  const [loading, setLoading] = useState(true);
   const limit = 5;
 
   const getData = async () => {
-    setTotalPage(Math.ceil(dummy.length / limit));
-    setData(dummy?.slice((page - 1) * limit, page * limit));
+    await axios
+      .get(apiData)
+      .then((res) => {
+        setDataServer(res.data);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  const setFilteredData = () => {
+    setTotalPage(Math.ceil(dataServer.length / limit));
+    setData(dataServer?.slice((page - 1) * limit, page * limit));
   };
 
   useEffect(() => {
     getData();
   }, []);
 
-  const filteredData = dummy?.filter(
+  useEffect(() => {
+    setFilteredData();
+  }, [dataServer]);
+
+  const filteredData = dataServer?.filter(
     (item) =>
       item.nama.toLowerCase().includes(filter.toLowerCase()) ||
       item.nbm.toLowerCase().includes(filter.toLowerCase())
@@ -38,7 +56,8 @@ export default function Home() {
       <Stack spacing="4" zIndex="2">
         <Hero />
         <Search setFilter={setFilter} />
-        <BoxAnggota data={data} />
+        {loading && <Text>Loading...</Text>}
+        {!loading && <BoxAnggota data={data} />}
         {totalPage > 1 && (
           <Pagination page={page} setPage={setPage} totalPage={totalPage} />
         )}

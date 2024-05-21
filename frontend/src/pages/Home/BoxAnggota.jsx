@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 
 export default function BoxAnggota({ data }) {
-  if (!data.length) {
+  if (data?.length < 1) {
     return (
       <VStack
         w="full"
@@ -33,9 +33,9 @@ export default function BoxAnggota({ data }) {
       p="5"
       color="black"
     >
-      {data?.map((item) => (
+      {data?.map((item, index) => (
         <HStack
-          key={item.id}
+          key={index}
           spacing={4}
           w="full"
           pos="relative"
