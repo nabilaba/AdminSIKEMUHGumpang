@@ -1,171 +1,38 @@
-import { Stack, Text } from "@chakra-ui/react";
-import BoxAnggota from "./BoxAnggota";
-import { useEffect, useState } from "react";
-import Footer from "./Footer";
-import Search from "./Search";
-import Hero from "./Hero";
-import Pagination from "./Pagination";
-import axios from "axios";
-import { apiData } from "../../configs/api";
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Button,
+  Heading,
+} from "@chakra-ui/react";
 
 export default function Home() {
-  const [filter, setFilter] = useState("");
-  const [dataServer, setDataServer] = useState([]);
-  const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(0);
-
-  const [loading, setLoading] = useState(true);
-  const limit = 5;
-
-  const getData = async () => {
-    await axios
-      .get(apiData)
-      .then((res) => {
-        setDataServer(res.data);
-      })
-      .finally(() => setLoading(false));
-  };
-
-  const setFilteredData = () => {
-    setTotalPage(Math.ceil(dataServer.length / limit));
-    setData(dataServer?.slice((page - 1) * limit, page * limit));
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    setFilteredData();
-  }, [dataServer]);
-
-  const filteredData = dataServer?.filter(
-    (item) =>
-      item.nama.toLowerCase().includes(filter.toLowerCase()) ||
-      item.nbm.toLowerCase().includes(filter.toLowerCase())
-  );
-
-  useEffect(() => {
-    setTotalPage(Math.ceil(filteredData.length / limit));
-    setData(filteredData?.slice((page - 1) * limit, page * limit));
-  }, [page, filter]);
-
   return (
-    <>
-      <Stack spacing="4" zIndex="2">
-        <Hero />
-        <Search setFilter={setFilter} />
-        {loading && <Text>Loading...</Text>}
-        {!loading && <BoxAnggota data={data} />}
-        {totalPage > 1 && (
-          <Pagination page={page} setPage={setPage} totalPage={totalPage} />
-        )}
-        <Footer />
-      </Stack>
-    </>
+    <Stack spacing={4} m={"auto"} w="full" maxW="xl" zIndex="2">
+      <Heading fontSize={"4xl"}>Login Page</Heading>
+      <Box rounded={"lg"} bg="white" boxShadow={"lg"} p={8} color="black">
+        <Stack spacing={4}>
+          <FormControl id="email">
+            <FormLabel>Username</FormLabel>
+            <Input type="text" />
+          </FormControl>
+          <FormControl id="password">
+            <FormLabel>Kata Sandi</FormLabel>
+            <Input type="password" />
+          </FormControl>
+          <Button
+            bg={"blue.400"}
+            color={"white"}
+            _hover={{
+              bg: "blue.500",
+            }}
+          >
+            Masuk
+          </Button>
+        </Stack>
+      </Box>
+    </Stack>
   );
 }
-
-const dummy = [
-  {
-    id: 1,
-    nama: "Nabil Aziz Bima Anggita",
-    nbm: "1234567890",
-    profesi: "Dosen, Pengusaha",
-    pendidikan: "S1",
-    alamat: "Sukoharjo",
-    jabatan: "Ketua Pimpinan",
-    foto: "/assets/nabil.jpg",
-  },
-  {
-    id: 2,
-    nama: "Dewi Khoirunnisa",
-    nbm: "1234567890",
-    profesi: "Dosen, Pengusaha",
-    pendidikan: "S1",
-    alamat: "Tawangmangu",
-    jabatan: "Anggota",
-    foto: "/assets/dewi.jpg",
-  },
-  {
-    id: 3,
-    nama: "Anggota 2",
-    nbm: "1234567890",
-    profesi: "Dosen, Pengusaha",
-    pendidikan: "S1",
-    alamat: "Sukoharjo",
-    jabatan: "Ketua Pimpinan",
-    foto: "/assets/default.jpg",
-  },
-  {
-    id: 4,
-    nama: "Anggota 3",
-    nbm: "1234567890",
-    profesi: "Dosen, Pengusaha",
-    pendidikan: "S1",
-    alamat: "Tawangmangu",
-    jabatan: "Anggota",
-    foto: "/assets/default.jpg",
-  },
-  {
-    id: 5,
-    nama: "Anggota 4",
-    nbm: "1234567890",
-    profesi: "Dosen, Pengusaha",
-    pendidikan: "S1",
-    alamat: "Sukoharjo",
-    jabatan: "Ketua Pimpinan",
-    foto: "/assets/default.jpg",
-  },
-  {
-    id: 6,
-    nama: "Anggota 5",
-    nbm: "1234567890",
-    profesi: "Dosen, Pengusaha",
-    pendidikan: "S1",
-    alamat: "Tawangmangu",
-    jabatan: "Anggota",
-    foto: "/assets/default.jpg",
-  },
-  {
-    id: 7,
-    nama: "Anggota 6",
-    nbm: "1234567890",
-    profesi: "Dosen, Pengusaha",
-    pendidikan: "S1",
-    alamat: "Sukoharjo",
-    jabatan: "Ketua Pimpinan",
-    foto: "/assets/default.jpg",
-  },
-  {
-    id: 8,
-    nama: "Anggota 7",
-    nbm: "1234567890",
-    profesi: "Dosen, Pengusaha",
-    pendidikan: "S1",
-    alamat: "Tawangmangu",
-    jabatan: "Anggota",
-    foto: "/assets/default.jpg",
-  },
-  {
-    id: 9,
-    nama: "Anggota 8",
-    nbm: "1234567890",
-    profesi: "Dosen, Pengusaha",
-    pendidikan: "S1",
-    alamat: "Sukoharjo",
-    jabatan: "Ketua Pimpinan",
-    foto: "/assets/default.jpg",
-  },
-  {
-    id: 10,
-    nama: "Anggota 9",
-    nbm: "1234567890",
-    profesi: "Dosen, Pengusaha",
-    pendidikan: "S1",
-    alamat: "Tawangmangu",
-    jabatan: "Anggota",
-    foto: "/assets/default.jpg",
-  },
-];
