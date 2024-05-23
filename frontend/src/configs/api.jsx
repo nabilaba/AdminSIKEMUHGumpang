@@ -9,7 +9,9 @@ if (
 }
 
 const apiData = `${api}/data`;
+const apiLogin = `${api}/auth/login`;
+const apiRegister = `${api}/auth/register`;
 
-export { apiData };
+export { apiData, apiLogin, apiRegister };
 
 export default api;
