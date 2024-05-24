@@ -8,6 +8,7 @@ export const useTokenStore = create(
     (set) => ({
       token: null,
       setToken: (token) => set({ token }),
+      removeToken: () => set({ token: null }),
     }),
     {
       name: "token-storage",
