@@ -6,6 +6,8 @@ import Protected from "./templates/Protected";
 import SidebarWithHeader from "./templates/Sidebar";
 import ChangeAccount from "./pages/ChangeAccount";
 import ListAdmin from "./pages/ListAdmin";
+import AddMember from "./pages/AddMember";
+import Member from "./pages/Member";
 
 function App() {
   return (
@@ -16,8 +18,10 @@ function App() {
       </Route>
       <Route path="dashboard" element={<SidebarWithHeader />}>
         <Route index element={<Dashboard />} />
+        <Route path="member" element={<Member />} />
         <Route path="list-admin" element={<ListAdmin />} />
         <Route path="change-account" element={<ChangeAccount />} />
+        <Route path="add-member" element={<AddMember />} />
         <Route path="*" element={<div>Not Found</div>} />
       </Route>
     </Routes>

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useDataStore } from "../../helpers/Data";
-import { useUserStore } from "../../helpers/User";
 import {
   Box,
   Stack,
@@ -12,25 +11,15 @@ import {
   Th,
   Td,
   Avatar,
-  AvatarGroup,
-  HStack,
-  Link,
   Text,
 } from "@chakra-ui/react";
 import Protected from "../../templates/Protected";
-import { Link as RouterLink } from "react-router-dom";
 
-export default function Dashboard() {
+export default function Member() {
   const { data, loading, getData } = useDataStore();
-  const {
-    data: userData,
-    loading: userLoading,
-    getData: getUserData,
-  } = useUserStore();
 
   useEffect(() => {
     getData();
-    getUserData();
   }, []);
 
   if (loading) {
@@ -59,7 +48,7 @@ export default function Dashboard() {
                 </Tr>
               </Thead>
               <Tbody>
-                {data?.slice(0, 3).map((item, index) => (
+                {data?.map((item, index) => (
                   <Tr key={index}>
                     <Td>
                       <Avatar src={item.foto} size="sm" />
@@ -75,25 +64,6 @@ export default function Dashboard() {
               </Tbody>
             </Table>
           </Box>
-          <HStack justify="space-between" p="2" mt="2">
-            <AvatarGroup>
-              {data.length > 3 &&
-                data
-                  ?.slice(3, 6)
-                  .map((avatar, index) => (
-                    <Avatar
-                      key={index}
-                      src={avatar.foto}
-                      size="sm"
-                      position="relative"
-                      zIndex={2}
-                    />
-                  ))}
-            </AvatarGroup>
-            <RouterLink to="member">
-              <Link color="blue.500">Lihat Semua &gt;</Link>
-            </RouterLink>
-          </HStack>
         </Box>
       </Stack>
     </Protected>
