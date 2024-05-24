@@ -7,7 +7,7 @@ export const useTokenStore = create(
   persist(
     (set) => ({
       token: null,
-      setToken: (token) => set({ token }),
+      setToken: ({ token }) => set({ token }),
       removeToken: () => set({ token: null }),
     }),
     {
@@ -22,7 +22,6 @@ export const useAuthStore = create((set) => ({
     set({ loading: true });
     try {
       const { data } = await axios.post(apiLogin, { username, password });
-      console.log(data);
       useTokenStore.getState().setToken({ token: data.token });
     } catch (error) {
       if (

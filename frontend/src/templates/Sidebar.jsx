@@ -15,12 +15,11 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  Stack,
 } from "@chakra-ui/react";
 import {
   FiHome,
   FiTrendingUp,
-  FiCompass,
-  FiStar,
   FiSettings,
   FiMenu,
   FiChevronDown,
@@ -28,13 +27,13 @@ import {
 import { Outlet } from "react-router-dom";
 import { useTokenStore } from "../helpers/Auth";
 import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 const LinkItems = [
-  { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
-  { name: "Explore", icon: FiCompass },
-  { name: "Favourites", icon: FiStar },
-  { name: "Settings", icon: FiSettings },
+  { name: "Home", icon: FiHome, to: "/dashboard" },
+  { name: "Tambah Anggota", icon: FiTrendingUp, to: "/dashboard/add-member" },
+  { name: "List Admin", icon: FiTrendingUp, to: "/dashboard/list-admin" },
+  { name: "Settings", icon: FiSettings, to: "/dashboard/settings" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }) => {
@@ -48,6 +47,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
+      overflowY="auto"
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
@@ -56,22 +56,30 @@ const SidebarContent = ({ onClose, ...rest }) => {
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
+      <Stack>
+        {LinkItems.map((link) => (
+          <NavItem
+            key={link.name}
+            icon={link.icon}
+            to={link.to}
+            onClick={onClose}
+          >
+            {link.name}
+          </NavItem>
+        ))}
+      </Stack>
     </Box>
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, to, children, ...rest }) => {
+  const location = useLocation();
   return (
     <Box
-      as="a"
-      href="#"
+      as={RouterLink}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
+      to={to}
     >
       <Flex
         align="center"
@@ -84,6 +92,7 @@ const NavItem = ({ icon, children, ...rest }) => {
           bg: "cyan.400",
           color: "white",
         }}
+        {...(location.pathname === to && { bg: "cyan.400", color: "white" })}
         {...rest}
       >
         {icon && (
@@ -160,7 +169,11 @@ const MobileNav = ({ onOpen, ...rest }) => {
             </HStack>
           </MenuButton>
           <MenuList bg="white" color="black" borderColor="gray.200">
-            <MenuItem>Profile</MenuItem>
+            <MenuItem>
+              <RouterLink to="/dashboard/change-account">
+                Change Account
+              </RouterLink>
+            </MenuItem>
             <MenuItem>Settings</MenuItem>
             <MenuItem>Billing</MenuItem>
             <MenuDivider />

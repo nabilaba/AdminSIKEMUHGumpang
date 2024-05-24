@@ -4,6 +4,8 @@ import Root from "./templates/Root";
 import Dashboard from "./pages/Dashboard";
 import Protected from "./templates/Protected";
 import SidebarWithHeader from "./templates/Sidebar";
+import ChangeAccount from "./pages/ChangeAccount";
+import ListAdmin from "./pages/ListAdmin";
 
 function App() {
   return (
@@ -13,14 +15,9 @@ function App() {
         <Route path="*" element={<div>Not Found</div>} />
       </Route>
       <Route path="dashboard" element={<SidebarWithHeader />}>
-        <Route
-          index
-          element={
-            <Protected>
-              <Dashboard />
-            </Protected>
-          }
-        />
+        <Route index element={<Dashboard />} />
+        <Route path="list-admin" element={<ListAdmin />} />
+        <Route path="change-account" element={<ChangeAccount />} />
         <Route path="*" element={<div>Not Found</div>} />
       </Route>
     </Routes>
