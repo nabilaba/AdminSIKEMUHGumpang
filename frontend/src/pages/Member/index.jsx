@@ -12,11 +12,15 @@ import {
   Td,
   Avatar,
   Text,
+  IconButton,
+  HStack,
 } from "@chakra-ui/react";
 import Protected from "../../templates/Protected";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import swal from "sweetalert2";
 
 export default function Member() {
-  const { data, loading, getData } = useDataStore();
+  const { data, loading, getData, deleteData } = useDataStore();
 
   useEffect(() => {
     getData();
@@ -26,13 +30,41 @@ export default function Member() {
     return <div>Loading...</div>;
   }
 
+  const handleDelete = async (id) => {
+    try {
+      swal
+        .fire({
+          title: "Apakah Anda yakin?",
+          text: "Data yang dihapus tidak dapat dikembalikan!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Ya, hapus!",
+          cancelButtonText: "Batal",
+          reverseButtons: true,
+        })
+        .then(async (result) => {
+          if (result.isConfirmed) {
+            await deleteData(id);
+            getData();
+            swal.fire("Terhapus!", "Data berhasil dihapus.", "success");
+          }
+        });
+    } catch (error) {
+      swal.fire("Gagal!", error.message, "error");
+    }
+  };
+
   return (
     <Protected>
       <Stack spacing={4} m={"auto"} w="full" zIndex="2">
         <Box rounded={"lg"} bg="white" p={2} color="black">
           <Box p="2">
             <Heading fontSize={"xl"}>DATA ANGGOTA</Heading>
-            <Text fontSize={"sm"} color="gray.500">Jumlah Anggota: {data.length}</Text>
+            <Text fontSize={"sm"} color="gray.500">
+              Jumlah Anggota: {data.length}
+            </Text>
           </Box>
           <Box overflow="auto">
             <Table>
@@ -45,6 +77,7 @@ export default function Member() {
                   <Th>Pendidikan</Th>
                   <Th>Alamat</Th>
                   <Th>Jabatan</Th>
+                  <Th>Opsi</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -59,6 +92,23 @@ export default function Member() {
                     <Td>{item.pendidikan}</Td>
                     <Td>{item.alamat}</Td>
                     <Td>{item.jabatan}</Td>
+                    <Td>
+                      <HStack>
+                        <IconButton
+                          aria-label="edit"
+                          icon={<EditIcon />}
+                          size="sm"
+                          colorScheme="blue"
+                        />
+                        <IconButton
+                          aria-label="delete"
+                          icon={<DeleteIcon />}
+                          size="sm"
+                          colorScheme="red"
+                          onClick={() => handleDelete(item._id)}
+                        />
+                      </HStack>
+                    </Td>
                   </Tr>
                 ))}
               </Tbody>

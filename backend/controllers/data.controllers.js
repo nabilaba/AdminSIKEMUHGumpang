@@ -21,3 +21,13 @@ exports.createData = async (req, res) => {
     res.status(400).json(err.message);
   }
 };
+
+exports.deleteData = async (req, res) => {
+  await dbConnect();
+  try {
+    const data = await Data.findByIdAndDelete(req.params.id);
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(404).json(err.message);
+  }
+};

@@ -10,6 +10,7 @@ import {
 import { useAuthStore } from "../../helpers/Auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert2";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -23,9 +24,10 @@ export default function Home() {
     e.preventDefault();
     try {
       await LOGIN(username, password);
+      swal.fire("Berhasil!", "Anda berhasil masuk.", "success");
       navigate("/dashboard");
     } catch (error) {
-      console.log(error.message);
+      swal.fire("Gagal!", error.message, "error");
     }
   };
 

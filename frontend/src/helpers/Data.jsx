@@ -26,9 +26,29 @@ export const useDataStore = create((set) => ({
   },
   postData: async (payload) => {
     set({ loading: true });
-    console.log(payload);
     try {
       await axios.post(apiData, payload, {
+        headers: {
+          Authorization: `Bearer ${useTokenStore.getState().token}`,
+        },
+      });
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        throw new Error(error.response.data.message);
+      }
+      throw new Error("An error occurred. Please try again.");
+    } finally {
+      set({ loading: false });
+    }
+  },
+  deleteData: async (id) => {
+    set({ loading: true });
+    try {
+      await axios.delete(`${apiData}/${id}`, {
         headers: {
           Authorization: `Bearer ${useTokenStore.getState().token}`,
         },
