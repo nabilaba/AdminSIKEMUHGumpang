@@ -18,12 +18,15 @@ import {
 import Protected from "../../templates/Protected";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function Member() {
-  const { data, loading, getData, deleteData } = useDataStore();
+  const navigate = useNavigate();
+
+  const { data, loading, getAllData, deleteData } = useDataStore();
 
   useEffect(() => {
-    getData();
+    getAllData();
   }, []);
 
   if (loading) {
@@ -99,6 +102,7 @@ export default function Member() {
                           icon={<EditIcon />}
                           size="sm"
                           colorScheme="blue"
+                          onClick={() => navigate(`/dashboard/edit-member/${item._id}`)}
                         />
                         <IconButton
                           aria-label="delete"

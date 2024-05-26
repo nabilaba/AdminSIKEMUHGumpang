@@ -10,8 +10,14 @@ import {
 } from "@chakra-ui/react";
 import { useDataStore } from "../../helpers/Data";
 import { useState } from "react";
+import swal from "sweetalert2";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function AddMember() {
+export default function EditMember() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   const [nama, setNama] = useState("");
   const [nbm, setNbm] = useState("");
   const [profesi, setProfesi] = useState("");
@@ -20,12 +26,45 @@ export default function AddMember() {
   const [jabatan, setJabatan] = useState("");
   const [foto, setFoto] = useState("");
 
-  const { postData } = useDataStore();
+  const { loading, getData, editData } = useDataStore();
+
+  const fetchData = async () => {
+    const response = await getData(id);
+    setNama(response.nama);
+    setNbm(response.nbm);
+    setProfesi(response.profesi);
+    setPendidikan(response.pendidikan);
+    setAlamat(response.alamat);
+    setJabatan(response.jabatan);
+    setFoto(response.foto);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await postData({ nama, nbm, profesi, pendidikan, alamat, jabatan, foto });
+    try {
+      await editData(id, {
+        nama,
+        nbm,
+        profesi,
+        pendidikan,
+        alamat,
+        jabatan,
+        foto,
+      });
+      swal.fire("Berhasil!", "Data berhasil diedit.", "success");
+      navigate("/dashboard/member");
+    } catch (error) {
+      swal.fire("Gagal!", error.message, "error");
+    }
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Protected>
@@ -37,6 +76,7 @@ export default function AddMember() {
               type="text"
               value={nama}
               onChange={(e) => setNama(e.target.value)}
+              defaultValue={nama}
             />
           </FormControl>
           <FormControl id="nbm" isRequired>
@@ -45,6 +85,7 @@ export default function AddMember() {
               type="text"
               value={nbm}
               onChange={(e) => setNbm(e.target.value)}
+              defaultValue={nbm}
             />
           </FormControl>
           <FormControl id="profesi" isRequired>
@@ -53,6 +94,7 @@ export default function AddMember() {
               type="text"
               value={profesi}
               onChange={(e) => setProfesi(e.target.value)}
+              defaultValue={profesi}
             />
           </FormControl>
           <FormControl id="pendidikan" isRequired>
@@ -61,6 +103,7 @@ export default function AddMember() {
               type="text"
               value={pendidikan}
               onChange={(e) => setPendidikan(e.target.value)}
+              defaultValue={pendidikan}
             />
           </FormControl>
           <FormControl id="alamat" isRequired>
@@ -68,6 +111,7 @@ export default function AddMember() {
             <Textarea
               value={alamat}
               onChange={(e) => setAlamat(e.target.value)}
+              defaultValue={alamat}
             />
           </FormControl>
           <FormControl id="jabatan" isRequired>
@@ -76,6 +120,7 @@ export default function AddMember() {
               type="text"
               value={jabatan}
               onChange={(e) => setJabatan(e.target.value)}
+              defaultValue={jabatan}
             />
           </FormControl>
           <FormControl id="foto" isRequired>
@@ -84,10 +129,11 @@ export default function AddMember() {
               type="text"
               value={foto}
               onChange={(e) => setFoto(e.target.value)}
+              defaultValue={foto}
             />
           </FormControl>
           <Button type="submit" colorScheme="green" w="fit-content">
-            Tambah Anggota
+            Simpan
           </Button>
         </Stack>
       </Box>

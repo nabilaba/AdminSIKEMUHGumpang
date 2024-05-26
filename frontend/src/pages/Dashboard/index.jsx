@@ -21,7 +21,7 @@ import Protected from "../../templates/Protected";
 import { Link as RouterLink } from "react-router-dom";
 
 export default function Dashboard() {
-  const { data, loading, getData } = useDataStore();
+  const { data, loading, getAllData } = useDataStore();
   const {
     data: userData,
     loading: userLoading,
@@ -29,7 +29,7 @@ export default function Dashboard() {
   } = useUserStore();
 
   useEffect(() => {
-    getData();
+    getAllData();
     getUserData();
   }, []);
 

@@ -8,6 +8,7 @@ import ChangeAccount from "./pages/ChangeAccount";
 import ListAdmin from "./pages/ListAdmin";
 import AddMember from "./pages/AddMember";
 import Member from "./pages/Member";
+import EditMember from "./pages/EditMember";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="list-admin" element={<ListAdmin />} />
         <Route path="change-account" element={<ChangeAccount />} />
         <Route path="add-member" element={<AddMember />} />
+        <Route path="edit-member/:id" element={<EditMember />} />
         <Route path="*" element={<div>Not Found</div>} />
       </Route>
     </Routes>
