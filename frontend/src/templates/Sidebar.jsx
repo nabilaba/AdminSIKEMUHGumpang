@@ -33,7 +33,7 @@ const LinkItems = [
   { name: "Home", icon: FiHome, to: "/dashboard" },
   { name: "Tambah Anggota", icon: FiTrendingUp, to: "/dashboard/add-member" },
   { name: "List Admin", icon: FiTrendingUp, to: "/dashboard/list-admin" },
-  { name: "Settings", icon: FiSettings, to: "/dashboard/settings" },
+  { name: "Add Admin", icon: FiSettings, to: "/dashboard/add-admin" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }) => {
@@ -170,12 +170,10 @@ const MobileNav = ({ onOpen, ...rest }) => {
           </MenuButton>
           <MenuList bg="white" color="black" borderColor="gray.200">
             <MenuItem>
-              <RouterLink to="/dashboard/change-account">
-                Change Account
+              <RouterLink to="/dashboard/edit-profile">
+                Ubah Info Akun
               </RouterLink>
             </MenuItem>
-            <MenuItem>Settings</MenuItem>
-            <MenuItem>Billing</MenuItem>
             <MenuDivider />
             <MenuItem onClick={removeToken}>Keluar</MenuItem>
           </MenuList>

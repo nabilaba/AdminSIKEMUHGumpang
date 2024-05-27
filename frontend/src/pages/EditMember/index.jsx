@@ -76,7 +76,6 @@ export default function EditMember() {
               type="text"
               value={nama}
               onChange={(e) => setNama(e.target.value)}
-              defaultValue={nama}
             />
           </FormControl>
           <FormControl id="nbm" isRequired>
@@ -85,7 +84,6 @@ export default function EditMember() {
               type="text"
               value={nbm}
               onChange={(e) => setNbm(e.target.value)}
-              defaultValue={nbm}
             />
           </FormControl>
           <FormControl id="profesi" isRequired>
@@ -94,7 +92,6 @@ export default function EditMember() {
               type="text"
               value={profesi}
               onChange={(e) => setProfesi(e.target.value)}
-              defaultValue={profesi}
             />
           </FormControl>
           <FormControl id="pendidikan" isRequired>
@@ -103,7 +100,6 @@ export default function EditMember() {
               type="text"
               value={pendidikan}
               onChange={(e) => setPendidikan(e.target.value)}
-              defaultValue={pendidikan}
             />
           </FormControl>
           <FormControl id="alamat" isRequired>
@@ -111,7 +107,6 @@ export default function EditMember() {
             <Textarea
               value={alamat}
               onChange={(e) => setAlamat(e.target.value)}
-              defaultValue={alamat}
             />
           </FormControl>
           <FormControl id="jabatan" isRequired>
@@ -120,7 +115,6 @@ export default function EditMember() {
               type="text"
               value={jabatan}
               onChange={(e) => setJabatan(e.target.value)}
-              defaultValue={jabatan}
             />
           </FormControl>
           <FormControl id="foto" isRequired>
@@ -129,7 +123,6 @@ export default function EditMember() {
               type="text"
               value={foto}
               onChange={(e) => setFoto(e.target.value)}
-              defaultValue={foto}
             />
           </FormControl>
           <Button type="submit" colorScheme="green" w="fit-content">

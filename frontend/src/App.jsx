@@ -9,6 +9,8 @@ import ListAdmin from "./pages/ListAdmin";
 import AddMember from "./pages/AddMember";
 import Member from "./pages/Member";
 import EditMember from "./pages/EditMember";
+import AddAdmin from "./pages/AddAdmin";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route index element={<Dashboard />} />
         <Route path="member" element={<Member />} />
         <Route path="list-admin" element={<ListAdmin />} />
+        <Route path="add-admin" element={<AddAdmin />} />
+        <Route path="edit-profile" element={<EditProfile />} />
         <Route path="change-account" element={<ChangeAccount />} />
         <Route path="add-member" element={<AddMember />} />
         <Route path="edit-member/:id" element={<EditMember />} />

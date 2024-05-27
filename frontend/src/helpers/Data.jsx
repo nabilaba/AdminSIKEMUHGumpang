@@ -32,6 +32,7 @@ export const useDataStore = create((set) => ({
           Authorization: `Bearer ${useTokenStore.getState().token}`,
         },
       });
+      await useDataStore.getState().getAllData();
     } catch (error) {
       if (
         error.response &&
@@ -53,6 +54,7 @@ export const useDataStore = create((set) => ({
           Authorization: `Bearer ${useTokenStore.getState().token}`,
         },
       });
+      await useDataStore.getState().getAllData();
     } catch (error) {
       if (
         error.response &&
@@ -96,6 +98,7 @@ export const useDataStore = create((set) => ({
           Authorization: `Bearer ${useTokenStore.getState().token}`,
         },
       });
+      await useDataStore.getState().getAllData();
     } catch (error) {
       if (
         error.response &&

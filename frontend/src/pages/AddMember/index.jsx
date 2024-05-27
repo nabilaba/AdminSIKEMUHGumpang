@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useDataStore } from "../../helpers/Data";
 import { useState } from "react";
+import swal from "sweetalert2";
 
 export default function AddMember() {
   const [nama, setNama] = useState("");
@@ -24,7 +25,35 @@ export default function AddMember() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await postData({ nama, nbm, profesi, pendidikan, alamat, jabatan, foto });
+    try {
+      await postData({
+        nama,
+        nbm,
+        profesi,
+        pendidikan,
+        alamat,
+        jabatan,
+        foto,
+      });
+      swal.fire({
+        title: "Success",
+        text: "Anggota berhasil ditambahkan",
+        icon: "success",
+      });
+      setNama("");
+      setNbm("");
+      setProfesi("");
+      setPendidikan("");
+      setAlamat("");
+      setJabatan("");
+      setFoto("");
+    } catch (error) {
+      swal.fire({
+        title: "Error",
+        text: error.message,
+        icon: "error",
+      });
+    }
   };
 
   return (
