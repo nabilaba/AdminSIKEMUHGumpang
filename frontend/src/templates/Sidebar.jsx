@@ -26,9 +26,11 @@ import { Outlet } from "react-router-dom";
 import { useTokenStore } from "../helpers/Auth";
 import { useNavigate } from "react-router-dom";
 import { Link as RouterLink, useLocation } from "react-router-dom";
+import swal from "sweetalert2";
 
 const LinkItems = [
   { name: "Home", icon: FiHome, to: "/dashboard" },
+  { name: "Settings", icon: FiHome, to: "/settings" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }) => {
@@ -83,19 +85,16 @@ const NavItem = ({ icon, to, children, ...rest }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "green.500",
           color: "white",
         }}
-        {...(location.pathname === to && { bg: "cyan.400", color: "white" })}
+        {...(location.pathname === to && { bg: "green.500", color: "white" })}
         {...rest}
       >
         {icon && (
           <Icon
             mr="4"
             fontSize="16"
-            _groupHover={{
-              color: "white",
-            }}
             as={icon}
           />
         )}
@@ -108,8 +107,24 @@ const NavItem = ({ icon, to, children, ...rest }) => {
 const MobileNav = ({ onOpen, ...rest }) => {
   const navigate = useNavigate();
   const removeToken = () => {
-    useTokenStore.getState().removeToken();
-    navigate("/");
+    swal
+      .fire({
+        title: "Apakah kamu yakin?",
+        text: "Kamu akan keluar dari aplikasi",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya",
+        cancelButtonText: "Tidak",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          useTokenStore.getState().removeToken();
+          navigate("/");
+        }
+      });
   };
 
   return (
