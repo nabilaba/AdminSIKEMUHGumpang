@@ -11,8 +11,11 @@ import {
 import { useUserStore } from "../../helpers/User";
 import { useState } from "react";
 import swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function AddAdmin() {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -32,6 +35,7 @@ export default function AddAdmin() {
       });
       setUsername("");
       setPassword("");
+      navigate("-1");
     } catch (error) {
       swal.fire({
         title: "Error",

@@ -36,7 +36,7 @@ export default function EditProfile() {
     try {
       await editProfileByToken({ username, password });
       swal.fire("Berhasil!", "Data berhasil diubah.", "success");
-      navigate("/dashboard");
+      navigate("-1");
     } catch (error) {
       swal.fire("Gagal!", error.message, "error");
     }

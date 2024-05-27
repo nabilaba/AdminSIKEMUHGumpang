@@ -19,8 +19,6 @@ import {
 } from "@chakra-ui/react";
 import {
   FiHome,
-  FiTrendingUp,
-  FiSettings,
   FiMenu,
   FiChevronDown,
 } from "react-icons/fi";
@@ -31,9 +29,6 @@ import { Link as RouterLink, useLocation } from "react-router-dom";
 
 const LinkItems = [
   { name: "Home", icon: FiHome, to: "/dashboard" },
-  { name: "Tambah Anggota", icon: FiTrendingUp, to: "/dashboard/add-member" },
-  { name: "List Admin", icon: FiTrendingUp, to: "/dashboard/list-admin" },
-  { name: "Add Admin", icon: FiSettings, to: "/dashboard/add-admin" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }) => {
@@ -47,7 +42,6 @@ const SidebarContent = ({ onClose, ...rest }) => {
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
-      overflowY="auto"
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">

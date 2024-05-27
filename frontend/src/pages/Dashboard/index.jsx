@@ -22,20 +22,16 @@ import { Link as RouterLink } from "react-router-dom";
 
 export default function Dashboard() {
   const { data, loading, getAllData } = useDataStore();
-  const {
-    data: userData,
-    loading: userLoading,
-    getData: getUserData,
-  } = useUserStore();
+  const { data: dataAdmin, loading: loadingAdmin, getData } = useUserStore();
+
+  const fetchData = async () => {
+    await getAllData();
+    await getData();
+  };
 
   useEffect(() => {
-    getAllData();
-    getUserData();
+    fetchData();
   }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <Protected>
@@ -43,57 +39,100 @@ export default function Dashboard() {
         <Box rounded={"lg"} bg="white" p={2} color="black">
           <Box p="2">
             <Heading fontSize={"xl"}>DATA ANGGOTA</Heading>
-            <Text fontSize={"sm"} color="gray.500">Jumlah Anggota: {data.length}</Text>
+            <Text fontSize={"sm"} color="gray.500">
+              Jumlah Anggota: {data.length}
+            </Text>
           </Box>
-          <Box overflow="auto">
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>Foto</Th>
-                  <Th>Nama</Th>
-                  <Th>NBM</Th>
-                  <Th>Profesi</Th>
-                  <Th>Pendidikan</Th>
-                  <Th>Alamat</Th>
-                  <Th>Jabatan</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {data?.slice(0, 3).map((item, index) => (
-                  <Tr key={index}>
-                    <Td>
-                      <Avatar src={item.foto} size="sm" />
-                    </Td>
-                    <Td>{item.nama}</Td>
-                    <Td>{item.nbm}</Td>
-                    <Td>{item.profesi}</Td>
-                    <Td>{item.pendidikan}</Td>
-                    <Td>{item.alamat}</Td>
-                    <Td>{item.jabatan}</Td>
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <>
+              <Box overflow="auto">
+                <Table>
+                  <Thead>
+                    <Tr>
+                      <Th>Foto</Th>
+                      <Th>Nama</Th>
+                      <Th>NBM</Th>
+                      <Th>Profesi</Th>
+                      <Th>Pendidikan</Th>
+                      <Th>Alamat</Th>
+                      <Th>Jabatan</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {data?.slice(0, 3).map((item, index) => (
+                      <Tr key={index}>
+                        <Td>
+                          <Avatar src={item.foto} size="sm" />
+                        </Td>
+                        <Td>{item.nama}</Td>
+                        <Td>{item.nbm}</Td>
+                        <Td>{item.profesi}</Td>
+                        <Td>{item.pendidikan}</Td>
+                        <Td>{item.alamat}</Td>
+                        <Td>{item.jabatan}</Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </Box>
+              <HStack justify="space-between" p="2" mt="2">
+                <AvatarGroup>
+                  {data.length > 3 &&
+                    data
+                      ?.slice(3, 6)
+                      .map((avatar, index) => (
+                        <Avatar
+                          key={index}
+                          src={avatar.foto}
+                          size="sm"
+                          position="relative"
+                          zIndex={2}
+                        />
+                      ))}
+                </AvatarGroup>
+                <Link as={RouterLink} color="blue.500" to="member">
+                  Lihat Semua &gt;
+                </Link>
+              </HStack>
+            </>
+          )}
+        </Box>
+        <Box rounded={"lg"} bg="white" p={2} color="black">
+          <Box p="2">
+            <Heading fontSize={"xl"}>DATA ADMIN</Heading>
+            <Text fontSize={"sm"} color="gray.500">
+              Jumlah Admin: {dataAdmin.length}
+            </Text>
           </Box>
-          <HStack justify="space-between" p="2" mt="2">
-            <AvatarGroup>
-              {data.length > 3 &&
-                data
-                  ?.slice(3, 6)
-                  .map((avatar, index) => (
-                    <Avatar
-                      key={index}
-                      src={avatar.foto}
-                      size="sm"
-                      position="relative"
-                      zIndex={2}
-                    />
-                  ))}
-            </AvatarGroup>
-            <RouterLink to="member">
-              <Link color="blue.500">Lihat Semua &gt;</Link>
-            </RouterLink>
-          </HStack>
+          {loadingAdmin ? (
+            <div>Loading...</div>
+          ) : (
+            <>
+              <Box overflow="auto">
+                <Table>
+                  <Thead>
+                    <Tr>
+                      <Th>Username</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {dataAdmin?.slice(0, 3).map((item, index) => (
+                      <Tr key={index}>
+                        <Td>{item.username}</Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </Box>
+              <HStack justify="end" p="2" mt="2">
+                <Link as={RouterLink} color="blue.500" to="list-admin">
+                  Lihat Semua &gt;
+                </Link>
+              </HStack>
+            </>
+          )}
         </Box>
       </Stack>
     </Protected>

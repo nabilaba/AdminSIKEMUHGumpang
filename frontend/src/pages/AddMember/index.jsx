@@ -11,8 +11,11 @@ import {
 import { useDataStore } from "../../helpers/Data";
 import { useState } from "react";
 import swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function AddMember() {
+  const navigate = useNavigate();
+
   const [nama, setNama] = useState("");
   const [nbm, setNbm] = useState("");
   const [profesi, setProfesi] = useState("");
@@ -47,6 +50,7 @@ export default function AddMember() {
       setAlamat("");
       setJabatan("");
       setFoto("");
+      navigate("-1");
     } catch (error) {
       swal.fire({
         title: "Error",

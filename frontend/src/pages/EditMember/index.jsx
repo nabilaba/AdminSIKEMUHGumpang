@@ -56,7 +56,7 @@ export default function EditMember() {
         foto,
       });
       swal.fire("Berhasil!", "Data berhasil diedit.", "success");
-      navigate("/dashboard/member");
+      navigate("-1");
     } catch (error) {
       swal.fire("Gagal!", error.message, "error");
     }
